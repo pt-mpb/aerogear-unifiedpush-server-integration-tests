@@ -46,7 +46,7 @@ public class LoginRequest extends AbstractAuthRequest<LoginRequest> {
         return this;
     }
 
-    public Session login() {
+    public Session login(String keycloakClientId) {
 
         URI authServerEndpointUri = KeycloakUriBuilder.fromUri(getAuthServerUrl().toExternalForm())
                 .path(ServiceUrlConstants.TOKEN_PATH).build("aerogear");
@@ -58,7 +58,7 @@ public class LoginRequest extends AbstractAuthRequest<LoginRequest> {
                 .formParam(OAuth2Constants.GRANT_TYPE, "password")
                 .formParam("username", username)
                 .formParam("password", password)
-                .formParam(OAuth2Constants.CLIENT_ID, "unified-push-server-js")
+                .formParam(OAuth2Constants.CLIENT_ID, keycloakClientId)
                 .post();
 
         if(response.statusCode() == HttpStatus.SC_OK) {
